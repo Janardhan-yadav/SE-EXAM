@@ -1,0 +1,153 @@
+Good 👍 Janardhan.
+Here is your **exam-ready simple procedure** for Phishing Email Analysis.
+
+Source: 
+
+---
+
+# ✅ Experiment: Analyzing Phishing Emails
+
+## 🎯 Aim:
+
+To analyze a suspicious email using **EML Analyzer** and **VirusTotal** and determine whether it is phishing.
+
+---
+
+# 🔹 PART A: EML Analyzer
+
+## ✅ Step-by-Step Procedure
+
+1️⃣ Open browser
+2️⃣ Go to **Online EML Analyzer**
+3️⃣ Upload file:
+
+```
+2020-05-05-phishing-email-example-01.eml
+```
+
+4️⃣ Click **Analyze**
+
+---
+
+## ✅ Key Observations (Write in Exam)
+
+### 📌 Email Details:
+
+* Subject: **Warning: Final Notice**
+* From: **[sues@nnwifi.com](mailto:sues@nnwifi.com)**
+* To: [brad@malware-traffic-analysis.net](mailto:brad@malware-traffic-analysis.net)
+* Content-Type: text/html
+* Message-ID: Missing
+
+---
+
+## ✅ Header Analysis:
+
+* Sender IP: **94.100.31.27**
+* Reverse DNS: 94-100-31-27.static.hvvc.us
+* Mail Server: mail.nnwifi.com
+
+---
+
+## ✅ Authentication Results:
+
+* SPF: **Failed**
+* DKIM: Not signed
+* DMARC: Not aligned
+
+⚠️ SPF failure is strong phishing indicator.
+
+---
+
+# 🔹 PART B: VirusTotal Analysis
+
+## ✅ Steps:
+
+1️⃣ Open **VirusTotal website**
+2️⃣ Go to **IP Address section**
+3️⃣ Enter:
+
+```
+94.100.31.27
+```
+
+4️⃣ Click Search
+
+---
+
+## ✅ VirusTotal Results:
+
+* Detection Ratio: **1 / 93**
+* Location: Netherlands
+* ASN: AS29802 (HVC-AS)
+
+### Interpretation:
+
+IP is not fully blacklisted but has suspicious reputation.
+
+---
+
+# 🔹 Suspicious URL Found
+
+From email body:
+
+```
+https://servervirto.com.co/ed/trn/update?email=brad@malware-traffic-analysis.net
+```
+
+### Why Suspicious?
+
+* Domain does NOT match sender domain (nnwifi.com)
+* Uses foreign domain (.com.co)
+* Requests email confirmation (credential harvesting)
+
+---
+
+# ✅ Answers for Lab Record
+
+1. Full sender email address:
+   **[sues@nnwifi.com](mailto:sues@nnwifi.com)**
+
+2. Domain used to send email:
+   **nnwifi.com**
+
+3. Sender IP address:
+   **94.100.31.27**
+
+4. Is sender IP blacklisted?
+   **Yes (1/93 vendors flagged it malicious)**
+
+5. SPF result:
+   **Failed**
+
+6. Suspicious URL:
+
+   ```
+   https://servervirto.com.co/ed/trn/update?email=brad@malware-traffic-analysis.net
+   ```
+
+---
+
+# 🔥 Phishing Indicators (Very Important for Viva)
+
+✔ Urgent subject: "Warning: Final Notice"
+✔ Fake display name
+✔ Different sender domain
+✔ SPF failed
+✔ DKIM missing
+✔ No Message-ID
+✔ HTML-only email
+✔ Suspicious external link
+✔ IP flagged on VirusTotal
+
+---
+
+# ✅ Final Conclusion (Write This Exactly)
+
+This email is classified as **PHISHING** because it shows multiple phishing indicators such as SPF failure, mismatched domain, suspicious URL, and partially blacklisted IP address.
+
+---
+
+If you have next experiment (SQL Injection, Wireshark, VPN, IDS, etc.), send it.
+
+We’ll finish everything before your exam 👍
