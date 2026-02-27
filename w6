@@ -1,0 +1,304 @@
+Good 👍 Janardhan.
+This is the **last big lab**. I’ll make it very simple so you can perform it easily in exam.
+
+Source: 
+
+---
+
+# ✅ LAB: Testing Authentication Weaknesses & Session Management (DVWA)
+
+---
+
+# 🎯 AIM
+
+To identify authentication weaknesses and session management vulnerabilities in DVWA.
+
+---
+
+# 🔥 PART A: Launch DVWA
+
+---
+
+## ✅ Step 1: Start Services
+
+Open terminal:
+
+```bash
+sudo service apache2 start
+sudo service mysql start
+```
+
+---
+
+## ✅ Step 2: Open DVWA
+
+Open Firefox:
+
+```
+http://127.0.0.1/dvwa
+```
+
+Login:
+
+```
+Username: admin
+Password: password
+```
+
+---
+
+## ✅ Step 3: Set Security Level
+
+Go to:
+
+```
+DVWA Security
+```
+
+Select:
+
+```
+LOW
+```
+
+Click Submit.
+
+---
+
+# 🔥 PART B: Authentication Weakness Testing
+
+---
+
+# 🟢 Experiment 1: Weak Password
+
+Go to:
+
+```
+DVWA → Vulnerabilities → Brute Force
+```
+
+Enter:
+
+```
+Username: admin
+Password: password
+```
+
+✅ Login successful → Weak authentication exists
+
+---
+
+# 🟢 Experiment 2: Manual Brute Force
+
+Keep username same:
+
+```
+admin
+```
+
+Try passwords one by one:
+
+1️⃣ admin ❌
+2️⃣ 123456 ❌
+3️⃣ password ✅
+
+### 🔍 Observation:
+
+✔ No account lock
+✔ Unlimited attempts
+✔ No captcha
+✔ No blocking
+
+👉 This is **Brute Force Vulnerability**
+
+---
+
+# 🔥 PART C: Session Management Vulnerabilities
+
+---
+
+# 🟢 Experiment 3: Session ID Analysis
+
+After login:
+
+Right click → Inspect → Storage → Cookies
+
+Look for:
+
+```
+PHPSESSID
+```
+
+Example:
+
+```
+5f6194766020dcaa2c906358cbd2941b
+```
+
+### 🔍 Observation:
+
+✔ Session ID visible
+✔ Not encrypted
+✔ Can be copied
+
+---
+
+# 🟢 Experiment 4: Session Hijacking
+
+---
+
+## Step 1: Victim Browser
+
+Login normally as admin.
+
+Copy:
+
+```
+PHPSESSID
+```
+
+---
+
+## Step 2: Attacker Browser
+
+Open Private Window:
+
+```
+Ctrl + Shift + P
+```
+
+Go to:
+
+```
+http://127.0.0.1/dvwa
+```
+
+Inspect → Storage → Cookies
+
+Replace PHPSESSID value with copied session ID.
+
+Press Enter.
+
+Refresh page.
+
+---
+
+### ✅ Result:
+
+✔ Logged in without username/password
+✔ Session hijacking successful
+
+---
+
+# 🟢 Experiment 5: Session Fixation
+
+---
+
+## Step 1: Open DVWA (Do NOT login)
+
+Check PHPSESSID before login.
+
+## Step 2: Login without closing browser.
+
+## Step 3: Check PHPSESSID again.
+
+### 🔍 If:
+
+Before Login = After Login
+→ Session Fixation vulnerability exists (LOW level)
+
+If different → Secure.
+
+---
+
+# 🟢 Experiment 6: Improper Logout (Session Reuse)
+
+---
+
+## Step 1:
+
+Login normally.
+
+Copy PHPSESSID.
+
+## Step 2:
+
+Logout.
+
+## Step 3:
+
+Open Private Window.
+
+Paste old PHPSESSID.
+
+Go directly to:
+
+```
+http://127.0.0.1/dvwa/index.php
+```
+
+Do NOT login.
+
+---
+
+### ✅ Expected Result (LOW):
+
+✔ Logged in again
+✔ Without password
+✔ Logout did NOT destroy session
+
+---
+
+# 📌 Final Observations Table (Write in Record)
+
+| Test                | Result     |
+| ------------------- | ---------- |
+| Weak Password       | Successful |
+| Brute Force         | Allowed    |
+| Session ID Exposure | Found      |
+| Session Hijacking   | Possible   |
+| Session Fixation    | Observed   |
+| Improper Logout     | Observed   |
+
+---
+
+# ✅ Final Conclusion (Write This)
+
+Authentication and session management vulnerabilities were successfully identified in DVWA. The experiment demonstrates the importance of secure password policies, session regeneration, and proper logout mechanisms to prevent unauthorized access.
+
+---
+
+# 🎤 Viva Questions (Important)
+
+1. What is authentication?
+   → Process of verifying user identity.
+
+2. What is brute force attack?
+   → Trying multiple passwords until correct one is found.
+
+3. What is session hijacking?
+   → Stealing session ID to access account.
+
+4. What is session fixation?
+   → Using same session ID before and after login.
+
+5. How to prevent session attacks?
+   ✔ Regenerate session after login
+   ✔ Use HTTPS
+   ✔ HttpOnly & Secure cookies
+   ✔ Destroy session on logout
+
+---
+
+Now you are fully prepared:
+
+✔ Firewall
+✔ Phishing
+✔ Packet Sniffing
+✔ SQL Injection
+✔ XSS
+✔ Authentication & Session
+
+You’re ready for tomorrow’s cyber security lab 🔥💪
+
+If you want quick last-minute revision summary (5-minute recap), tell me.
