@@ -1,0 +1,198 @@
+Good 👍 Janardhan.
+Here is your **very simple, exam-ready procedure** for Packet Sniffing & Network Traffic Analysis.
+
+Source: 
+
+---
+
+# ✅ Experiment: Packet Sniffing and Network Traffic Analysis
+
+## 🎯 Aim:
+
+To capture live network packets and analyze them using **tcpdump** and **Wireshark**, and understand why HTTP is insecure.
+
+---
+
+# 🔹 Requirements
+
+✔ Kali Linux (VirtualBox)
+✔ Wireshark (Pre-installed in Kali)
+✔ Python (for HTTP server)
+
+---
+
+# 🔥 STEP-BY-STEP PROCEDURE (Do Exactly Like This)
+
+---
+
+## ✅ Step 1: Open Kali Linux
+
+Start Kali in VirtualBox.
+
+---
+
+## ✅ Step 2: Open Terminal
+
+Click Terminal icon.
+
+---
+
+## ✅ Step 3: Start Local HTTP Server
+
+Type:
+
+```bash
+python3 -m http.server 8080
+```
+
+You will see:
+
+```bash
+Serving HTTP on 0.0.0.0 port 8080
+```
+
+✅ This means server is running.
+
+---
+
+## ✅ Step 4: Start Packet Capture (New Terminal)
+
+Open **another terminal**.
+
+Type:
+
+```bash
+sudo tcpdump -i any -w capture.pcap port 8080
+```
+
+Enter password.
+
+Now packet capturing starts.
+
+---
+
+## ✅ Step 5: Generate Traffic
+
+1. Open Firefox in Kali.
+2. Go to:
+
+```
+http://localhost:8080
+```
+
+3. Refresh page 2–3 times.
+
+This generates network traffic.
+
+---
+
+## ✅ Step 6: Stop Capture
+
+Go back to tcpdump terminal.
+
+Press:
+
+```
+Ctrl + C
+```
+
+You will see something like:
+
+```
+10 packets captured
+```
+
+✅ File saved as:
+
+```
+capture.pcap
+```
+
+---
+
+## ✅ Step 7: Open Capture File
+
+1. Open File Manager
+2. Go to Home folder
+3. Double click:
+
+```
+capture.pcap
+```
+
+It opens in Wireshark.
+
+---
+
+# 🔹 Analyze in Wireshark
+
+---
+
+## ✅ Step 8: Filter Login Packets
+
+In filter bar type:
+
+```
+http.request.method == "POST"
+```
+
+Press Enter.
+
+Only POST requests will appear.
+
+---
+
+## ✅ Step 9: Inspect Packet
+
+Click any packet.
+
+You will see:
+
+* Browser details
+* OS information
+* Language
+* URLs visited
+* If login form submitted → username & password visible in plain text
+
+---
+
+# 🔥 IMPORTANT OBSERVATION
+
+Since HTTP is **not encrypted**:
+
+✔ Data visible in plain text
+✔ Credentials visible
+✔ Anyone capturing packets can read data
+
+---
+
+# ✅ Final Conclusion (Write This)
+
+Packets were successfully captured and analyzed. Sensitive information is visible when HTTP is used. This proves that unencrypted communication is insecure. HTTPS is required to protect data.
+
+---
+
+# 🎤 Viva Questions (Very Important)
+
+### ❓ What is Packet Sniffing?
+
+Capturing and analyzing network traffic.
+
+### ❓ What is tcpdump?
+
+Command-line tool used to capture packets.
+
+### ❓ Why is HTTP insecure?
+
+Because it sends data in plain text.
+
+### ❓ Difference between HTTP and HTTPS?
+
+HTTP → Not encrypted
+HTTPS → Encrypted using SSL/TLS
+
+---
+
+If next experiment is SQL Injection, IDS, VPN, Steganography, etc., send it.
+
+We’ll finish everything tonight 💪🔥
