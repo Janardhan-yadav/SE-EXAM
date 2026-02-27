@@ -1,0 +1,259 @@
+Good 👍 Janardhan.
+Here is your **very simple, exam-ready procedure** for XSS Lab.
+
+Source: 
+
+---
+
+# ✅ Experiment: Finding & Exploiting XSS Vulnerabilities (DVWA)
+
+## 🎯 Aim:
+
+To identify and exploit Cross-Site Scripting (XSS) vulnerabilities using DVWA in Kali Linux.
+
+---
+
+# 🔹 Requirements
+
+✔ Kali Linux
+✔ DVWA
+✔ Apache & MySQL running
+✔ Firefox
+
+---
+
+# 🔥 PART 1: Start DVWA
+
+---
+
+## ✅ Step 1: Start Services
+
+Open Terminal:
+
+```bash
+sudo service apache2 start
+sudo service mysql start
+```
+
+Open browser:
+
+```
+http://localhost/dvwa
+```
+
+Login:
+
+```
+Username: admin
+Password: password
+```
+
+---
+
+## ✅ Step 2: Set Security Level
+
+Go to:
+
+```
+DVWA Security
+```
+
+Set:
+
+```
+Security Level = Low
+```
+
+Click Submit.
+
+---
+
+# 🔥 PART 2: Types of XSS in DVWA
+
+According to page 2:
+
+✔ Reflected XSS
+✔ Stored XSS
+✔ DOM Based XSS
+
+---
+
+# 🔹 1️⃣ Reflected XSS
+
+---
+
+## ✅ Step 3: Test Reflected XSS
+
+Go to:
+
+```
+DVWA → XSS (Reflected)
+```
+
+In input box enter:
+
+```html
+<script>alert('XSS')</script>
+```
+
+Click **Submit**
+
+### ✅ Output:
+
+Popup alert appears → **Reflected XSS confirmed**
+
+---
+
+# 🔹 2️⃣ Stored XSS
+
+---
+
+## ✅ Step 4: Test Stored XSS
+
+Go to:
+
+```
+DVWA → XSS (Stored)
+```
+
+Fill:
+
+Name:
+
+```html
+<h1>Hacked</h1>
+```
+
+Message:
+
+```html
+<script>alert('Stored XSS')</script>
+```
+
+Click:
+
+```
+Sign Guestbook
+```
+
+Refresh page.
+
+### ✅ Output:
+
+Popup appears every time → **Stored XSS successful**
+
+---
+
+# 🔹 3️⃣ DOM Based XSS
+
+---
+
+## ✅ Step 5: Test DOM XSS
+
+Go to:
+
+```
+DVWA → XSS (DOM)
+```
+
+In URL bar add:
+
+```html
+#<script>alert('DOM XSS')</script>
+```
+
+Press Enter.
+
+### ✅ Output:
+
+Popup appears → **DOM XSS confirmed**
+
+---
+
+# 🔹 Cookie Capture Demo (Important)
+
+---
+
+## ✅ Step 6: Capture Session Cookie
+
+In Stored XSS message box enter:
+
+```html
+<script>alert(document.cookie)</script>
+```
+
+Click Submit.
+
+### ✅ Output:
+
+Browser shows session cookie.
+
+⚠️ Demonstrates session hijacking risk.
+
+---
+
+# 🔹 Change Security Level
+
+---
+
+## ✅ Step 7:
+
+Go to:
+
+```
+DVWA Security
+```
+
+Set:
+
+```
+Medium / High
+```
+
+Repeat same payloads.
+
+You will notice filtering blocks the script.
+
+---
+
+# ✅ Final Result (Write This)
+
+XSS vulnerabilities were successfully identified and exploited in DVWA using Reflected, Stored, and DOM-based techniques.
+
+---
+
+# 🔥 Viva Questions (Prepare These)
+
+### ❓ What is XSS?
+
+Cross-Site Scripting allows attackers to inject malicious JavaScript into web pages.
+
+### ❓ Difference between Reflected and Stored XSS?
+
+Reflected → Executes immediately, not stored
+Stored → Saved in database, executes every time page loads
+
+### ❓ What is DOM XSS?
+
+Client-side XSS caused by modifying DOM via URL.
+
+### ❓ How to Prevent XSS?
+
+✔ Input validation
+✔ Output encoding
+✔ Content Security Policy
+✔ HttpOnly cookies
+
+---
+
+Now you have:
+
+✔ Firewall
+✔ Phishing
+✔ Packet Sniffing
+✔ SQL Injection
+✔ XSS
+
+If one more experiment left, send it fast.
+We’ll complete everything before you sleep 😎🔥
+w
