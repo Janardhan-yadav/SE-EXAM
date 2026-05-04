@@ -1,0 +1,236 @@
+Here’s the next one in the same **simple + exam-ready format** 👇
+
+---
+
+# 🔬 Experiment 3: Creating & Analyzing Disk Images (FTK Imager / Autopsy)
+
+*(Your manual uses dc3dd + Autopsy as alternative) *
+
+---
+
+## 🎯 Aim (write this)
+
+To create a forensic disk image and analyze it to extract digital evidence.
+
+---
+
+## 🛠️ Requirements
+
+* Kali Linux (VM)
+* dc3dd tool
+* Autopsy tool
+* 4GB RAM system
+* ❌ Internet NOT required
+
+---
+
+# 🚀 Step-by-Step Procedure
+
+## ✅ Step 1: Open Terminal in Kali
+
+Press:
+
+```
+Ctrl + Alt + T
+```
+
+---
+
+## ✅ Step 2: Create Sample Evidence (IMPORTANT)
+
+```bash
+echo "Cybersecurity Lab Evidence" > evidence.txt
+ls
+```
+
+👉 This file will be found later in analysis
+
+---
+
+## ✅ Step 3: Identify Disk Partition
+
+```bash
+lsblk
+```
+
+👉 Example output:
+
+```
+sda
+ ├─sda1
+ ├─sda2
+```
+
+👉 Note partition (like `/dev/sda1`)
+
+---
+
+## ✅ Step 4: Install dc3dd (if not installed)
+
+```bash
+sudo apt install dc3dd -y
+```
+
+---
+
+## ✅ Step 5: Create Disk Image
+
+### Create a small disk file:
+
+```bash
+dd if=/dev/zero of=practice_disk.dd bs=1M count=100
+```
+
+👉 Creates 100MB disk
+
+---
+
+### Create forensic image with hash:
+
+```bash
+dc3dd if=/dev/sda of=/home/kali/disk_image.dd hash=md5 log=/home/kali/acquisition.log
+```
+
+👉 Important:
+
+* `if` = input disk
+* `of` = output image
+* `hash` = integrity check
+
+---
+
+## ✅ Step 6: Verify Image
+
+```bash
+ls -lh /home/kali/disk_image.dd
+cat /home/kali/acquisition.log
+```
+
+👉 Check:
+
+* File created
+* Hash value present
+
+---
+
+## ✅ Step 7: Start Autopsy
+
+```bash
+autopsy
+```
+
+👉 Terminal will show URL like:
+
+```
+http://localhost:9999/autopsy
+```
+
+👉 Open in browser
+
+---
+
+## ✅ Step 8: Create New Case
+
+In browser:
+
+1. Click **Create New Case**
+2. Enter:
+
+   * Case Name
+   * Description
+3. Click Next
+
+---
+
+## ✅ Step 9: Add Disk Image
+
+1. Click:
+
+   * Add Host → Add Image
+2. Select:
+
+   ```
+   /home/kali/disk_image.dd
+   ```
+
+👉 Autopsy starts analysis
+
+---
+
+## ✅ Step 10: Analyze Evidence
+
+In Autopsy:
+
+* Browse files
+* Search for:
+
+  ```
+  evidence.txt
+  ```
+* Check:
+
+  * Deleted files
+  * Logs
+  * File metadata
+
+---
+
+# 🔍 What You Learn
+
+* Disk imaging (bit-by-bit copy)
+* Evidence preservation
+* File recovery
+* Hash verification
+
+---
+
+# 📊 Result (write this)
+
+A forensic disk image was successfully created and analyzed using dc3dd and Autopsy, and digital evidence was extracted.
+
+---
+
+# ⚠️ Precautions
+
+* Do not modify original disk
+* Always verify hash values
+* Use correct disk path
+* Ensure enough storage
+
+---
+
+# 💡 Viva Questions (IMPORTANT)
+
+### ❓ What is disk imaging?
+
+→ Exact copy of storage device
+
+### ❓ Why hashing is used?
+
+→ To verify integrity
+
+### ❓ What is MD5?
+
+→ Hash algorithm
+
+### ❓ What is Autopsy?
+
+→ Digital forensic analysis tool
+
+---
+
+# 🔥 Quick Revision
+
+* Create file
+* Use `dc3dd` to create image
+* Generate hash
+* Open Autopsy
+* Analyze files
+
+---
+
+Next experiments:
+👉 Log File Analysis
+👉 Privacy Audit
+
+Just say **next** 👍
