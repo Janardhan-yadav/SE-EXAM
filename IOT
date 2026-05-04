@@ -1,0 +1,222 @@
+Here’s a **simple + exam-ready guide** for
+
+# 🔬 Experiment 2: Testing IoT Device Security (Default Passwords & Open Ports)
+
+(based on your lab manual )
+
+---
+
+## 🎯 Aim (write this)
+
+To identify security weaknesses in an IoT device by detecting open ports, services, and testing default credentials.
+
+---
+
+## 🛠️ Requirements
+
+* Windows / Linux system
+* Docker Desktop
+* Kali Linux (VM)
+* Nmap
+* Internet (only for setup, not required later)
+
+---
+
+# 🚀 Step-by-Step Procedure
+
+## ✅ Step 1: Start IoT Simulation (VERY IMPORTANT)
+
+Open terminal (Windows CMD / PowerShell):
+
+```bash
+docker run -d -p 8090:3000 --name juiceshop bkimminich/juice-shop
+```
+
+👉 This creates a **vulnerable IoT web app**
+
+---
+
+## ✅ Step 2: Open IoT Dashboard
+
+Open browser:
+
+```
+http://localhost:8090
+```
+
+👉 This acts like IoT device interface
+
+---
+
+## ✅ Step 3: Find Your System IP
+
+### On Windows:
+
+```bash
+ipconfig
+```
+
+### On Linux:
+
+```bash
+ifconfig
+```
+
+👉 Example:
+
+```
+192.168.x.x
+```
+
+⚠️ Remember this IP (VERY IMPORTANT)
+
+---
+
+## ✅ Step 4: Start Kali Linux
+
+* Open Kali VM
+* Open Terminal
+
+---
+
+## ✅ Step 5: Scan Target Using Nmap
+
+```bash
+nmap -sV 192.168.x.x
+```
+
+👉 Replace with your IP
+
+---
+
+## 🔍 What this scan does:
+
+* Finds **open ports**
+* Detects **services**
+* Shows **versions**
+
+---
+
+## ✅ Step 6: Observe Output
+
+You will see:
+
+* Port 8090 → HTTP service
+* Other ports (135, 139, 445)
+* Service names + versions
+
+👉 This is **service enumeration**
+
+---
+
+## ✅ Step 7: Access IoT Web Interface
+
+In browser:
+
+```
+http://localhost:8090
+```
+
+👉 Shows IoT dashboard (Juice Shop)
+
+---
+
+## ✅ Step 8: Test Default Credentials
+
+1. Go to Login page
+2. Try common credentials like:
+
+   * admin / admin
+   * admin / password
+
+👉 If login succeeds → vulnerability found ✅
+
+---
+
+## ✅ Step 9: Check Network Traffic (Optional but good for marks)
+
+1. Open browser → Press **F12**
+2. Go to **Network tab**
+3. Reload page
+
+👉 Observe:
+
+* HTTP requests (plain text)
+* No HTTPS (important vulnerability)
+
+---
+
+# ⚠️ Vulnerabilities Identified (WRITE THIS IN EXAM)
+
+1. **Open Ports**
+
+   * Port 8090 accessible → increases attack surface
+
+2. **Service Enumeration**
+
+   * Version info visible → helps attackers
+
+3. **Unencrypted Communication**
+
+   * HTTP used → data in plain text
+
+4. **Weak Authentication**
+
+   * Default credentials allowed
+
+5. **Information Disclosure**
+
+   * Server details exposed
+
+---
+
+# 📊 Result (write this)
+
+Open ports, services, and weak authentication mechanisms were successfully identified in the simulated IoT device using Nmap and browser analysis.
+
+---
+
+# ⚠️ Precautions
+
+* Use correct IP address
+* Ensure Kali and host are in same network
+* Run Docker properly
+* Do not scan external systems (only lab setup)
+
+---
+
+# 💡 Viva Questions (IMPORTANT)
+
+### ❓ What is Nmap?
+
+→ Tool used for network scanning
+
+### ❓ What is port scanning?
+
+→ Identifying open ports on a system
+
+### ❓ Why default passwords are dangerous?
+
+→ Attackers can easily gain access
+
+### ❓ What is service enumeration?
+
+→ Finding services and their versions
+
+---
+
+# 🔥 Quick Revision (1-minute)
+
+* Start Juice Shop (Docker)
+* Find IP
+* Scan using `nmap -sV`
+* Identify open ports
+* Test default login
+* Observe HTTP traffic
+
+---
+
+If you want, I can give:
+✅ **Common errors (Docker/Nmap issues)**
+✅ **Short handwritten answer format (for exam writing)**
+✅ **Diagram flow (for extra marks)**
