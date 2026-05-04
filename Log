@@ -1,0 +1,266 @@
+Here’s the next one in the same **simple + exam-focused format** 👇
+
+---
+
+# 🔬 Experiment 4: Log File Analysis for Incident Detection
+
+*(based on your lab manual )*
+
+---
+
+## 🎯 Aim (write this)
+
+To analyze system log files and detect suspicious activities such as failed login attempts and attack patterns.
+
+---
+
+## 🛠️ Requirements
+
+* Kali Linux / Ubuntu
+* Basic Linux commands
+* Tools:
+
+  * journalctl
+  * grep, awk, sort
+* ❌ Internet NOT required
+
+---
+
+# 🚀 Step-by-Step Procedure
+
+## ✅ Step 1: Open Terminal
+
+```
+Ctrl + Alt + T
+```
+
+---
+
+## ✅ Step 2: Go to Log Directory
+
+```bash
+cd /var/log
+ls
+```
+
+👉 Important files:
+
+* `auth.log` → login logs
+* `wtmp`, `btmp` → login history
+* `apache2` → web logs
+
+---
+
+## ✅ Step 3: View Successful Logins
+
+```bash
+last
+```
+
+👉 Shows:
+
+* User login history
+* Time & IP
+
+---
+
+## ✅ Step 4: View System Logs
+
+```bash
+journalctl | less
+```
+
+👉 Scroll through logs
+
+---
+
+## ✅ Step 5: Find Failed Login Attempts (VERY IMPORTANT)
+
+```bash
+journalctl | grep "Failed"
+```
+
+👉 Detect:
+
+* Unauthorized access attempts
+
+---
+
+## ✅ Step 6: Check SSH Activity
+
+```bash
+journalctl | grep ssh
+```
+
+👉 Shows:
+
+* Login attempts
+* Connections
+
+---
+
+## ✅ Step 7: Find Errors
+
+```bash
+journalctl | grep -i error
+```
+
+👉 Detect abnormal system behavior
+
+---
+
+## ✅ Step 8: Analyze Apache Logs
+
+```bash
+cd /var/log/apache2
+ls
+sudo less access.log
+```
+
+👉 Shows:
+
+* Website requests
+
+---
+
+## ✅ Step 9: Find Suspicious Requests
+
+```bash
+grep "404" /var/log/apache2/access.log
+```
+
+👉 Many 404 = possible attack/scanning
+
+---
+
+## ✅ Step 10: Real-Time Monitoring
+
+```bash
+sudo journalctl -f
+```
+
+👉 Live logs (VERY useful in exam demo)
+
+---
+
+# 🔥 IMPORTANT (High Marks Step)
+
+## ✅ Step 11: Simulate Attack (FAILED LOGIN)
+
+### Start SSH:
+
+```bash
+sudo apt install openssh-server -y
+sudo service ssh start
+```
+
+---
+
+### Try wrong login:
+
+```bash
+ssh fakeuser@localhost
+```
+
+👉 Enter wrong password multiple times
+
+---
+
+## ✅ Step 12: Detect Attack
+
+```bash
+journalctl | grep "Failed password"
+```
+
+👉 You will see failed attempts
+
+---
+
+## ✅ Step 13: Extract Suspicious IP
+
+```bash
+journalctl | grep "Failed password" | awk '{print $11}'
+```
+
+👉 Output:
+
+```
+127.0.0.1
+```
+
+---
+
+## ✅ Step 14: Count Attack Attempts
+
+```bash
+journalctl | grep "Failed password" | awk '{print $11}' | sort | uniq -c | sort -nr
+```
+
+👉 Example:
+
+```
+10 127.0.0.1
+```
+
+👉 Means brute-force attempt 🚨
+
+---
+
+# 🔍 Key Observations (WRITE THIS)
+
+* Multiple failed login attempts
+* Same IP repeated → suspicious
+* 404 errors → scanning attack
+* Errors in logs → abnormal behavior
+
+---
+
+# 📊 Result (write this)
+
+System log files were successfully analyzed, and suspicious activities such as failed login attempts and brute-force attacks were detected.
+
+---
+
+# ⚠️ Precautions
+
+* Use correct commands
+* Ensure SSH service is running
+* Do not modify system logs
+* Analyze carefully before concluding
+
+---
+
+# 💡 Viva Questions (IMPORTANT)
+
+### ❓ What are logs?
+
+→ Records of system activity
+
+### ❓ What is journalctl?
+
+→ Tool to view system logs
+
+### ❓ What is brute force attack?
+
+→ Repeated login attempts
+
+### ❓ How to detect suspicious IP?
+
+→ Same IP repeated many times
+
+---
+
+# 🔥 Quick Revision
+
+* Go to `/var/log`
+* Use `journalctl`
+* Find failed logins
+* Extract IP
+* Count attempts
+
+---
+
+Next:
+👉 Privacy Audit + Data Breach Case Study (important one)
+
+Just say **next** 👍
