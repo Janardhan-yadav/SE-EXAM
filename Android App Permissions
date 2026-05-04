@@ -1,0 +1,206 @@
+Here’s a **simple + exam-ready step-by-step guide** for
+**Experiment 1: Analyzing Android App Permissions & Mobile Traffic** (based on your lab manual )
+
+---
+
+# 🔬 Experiment: Android App Permissions & Mobile Traffic Analysis
+
+## 🎯 Aim (write this in exam)
+
+To analyze Android app permissions and intercept HTTP/HTTPS traffic using an emulator and Burp Suite.
+
+---
+
+# 🛠️ Requirements
+
+* Android Studio (with Emulator)
+* Burp Suite
+* ADB (comes with Android Studio)
+* Internet connection ✅
+
+---
+
+# 🚀 Step-by-Step Procedure (VERY IMPORTANT)
+
+## ✅ Step 1: Open Android Emulator
+
+1. Open **Android Studio**
+2. Go to **AVD Manager**
+3. Start any device (Pixel 2 / Pixel 9)
+
+👉 Wait until emulator fully boots
+
+---
+
+## ✅ Step 2: Start Burp Suite
+
+1. Open **Burp Suite**
+2. Go to:
+
+   * Proxy → Options
+3. Check:
+
+   * Proxy Listener → **127.0.0.1:8080**
+4. Turn:
+
+   * **Intercept ON**
+
+---
+
+## ✅ Step 3: Start Emulator with Proxy (IMPORTANT)
+
+### Method 1 (Easy – GUI)
+
+1. In Emulator:
+
+   * Settings → Network & Internet → Internet
+   * Click your network
+   * Edit → Advanced Options
+2. Set:
+
+   * Proxy = Manual
+   * Hostname = **10.0.2.2**
+   * Port = **8080**
+3. Save
+
+---
+
+### Method 2 (If save not working – USE THIS IN EXAM)
+
+Open Command Prompt:
+
+```bash
+adb devices
+adb shell settings put global http_proxy 10.0.2.2:8080
+adb shell settings get global http_proxy
+```
+
+👉 Output should show: `10.0.2.2:8080`
+
+---
+
+## ✅ Step 4: Capture HTTP Traffic
+
+1. Open **Chrome in Emulator**
+2. Go to:
+
+   ```
+   http://example.com
+   ```
+3. In Burp:
+
+   * Go to Proxy → HTTP History
+
+👉 You will see requests (SUCCESS ✅)
+
+---
+
+## ⚠️ Step 5: Enable HTTPS Interception (VERY IMPORTANT)
+
+### Export Certificate from Burp
+
+1. Burp → Proxy → Options
+2. Click:
+
+   * **Import/Export CA Certificate**
+3. Select:
+
+   * **DER format**
+4. Save as:
+
+   ```
+   burpcer.der
+   ```
+
+---
+
+### Send Certificate to Emulator
+
+```bash
+adb push burpcer.der /sdcard/Download/
+```
+
+---
+
+### Install Certificate in Emulator
+
+1. Go to:
+
+   * Settings → Security & Privacy
+   * Encryption & Credentials
+   * Install Certificate
+   * CA Certificate
+2. Select:
+
+   ```
+   burpcer.der
+   ```
+
+👉 Install it
+
+---
+
+## ✅ Step 6: Capture HTTPS Traffic
+
+1. Open emulator browser
+2. Visit:
+
+   ```
+   https://example.com
+   ```
+3. Go to Burp → HTTP History
+
+👉 Now HTTPS requests visible ✅
+
+---
+
+# 🔍 Step 7: Analyze App Permissions (IMPORTANT FOR THEORY)
+
+1. In Emulator:
+
+   * Settings → Apps → Select any app
+   * Click **Permissions**
+2. Observe:
+
+   * Camera
+   * Location
+   * Storage
+   * Contacts
+
+👉 Note unnecessary permissions
+
+---
+
+# 📊 Result (write in exam)
+
+Android app traffic (HTTP & HTTPS) was successfully intercepted and analyzed using Burp Suite by configuring proxy and installing CA certificate.
+
+---
+
+# ⚠️ Precautions (VERY IMPORTANT FOR MARKS)
+
+* Ensure proxy port is **8080**
+* Emulator must be running before ADB commands
+* Install CA certificate properly for HTTPS
+* Turn OFF intercept when browsing normally
+
+---
+
+# 💡 Viva Tips (important)
+
+* **Why 10.0.2.2?**
+  → It connects emulator to host machine
+
+* **Why CA certificate?**
+  → To decrypt HTTPS traffic
+
+* **Difference HTTP vs HTTPS?**
+  → HTTP = plain text
+  → HTTPS = encrypted
+
+---
+
+If you want, I can give you:
+✅ Viva questions & answers
+✅ Short procedure (1-page revision)
+✅ Common errors + fixes (very useful in lab)
