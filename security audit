@@ -1,0 +1,226 @@
+Here’s the **last experiment** in the same **simple + exam-ready format** 👇
+
+---
+
+# 🔬 Experiment 6: Security Audit & Risk Assessment
+
+*(based on your lab manual )*
+
+---
+
+## 🎯 Aim (write this)
+
+To perform a security audit on a system, identify vulnerabilities, and conduct risk assessment with mitigation strategies.
+
+---
+
+## 🛠️ Requirements
+
+* Windows 10/11 system
+* Windows Security (Defender)
+* Command Prompt
+* Task Manager
+* Browser
+* ⚠️ Internet OPTIONAL
+
+---
+
+# 🚀 Step-by-Step Procedure
+
+---
+
+## ✅ Step 1: Open Windows Security
+
+1. Search:
+
+   ```
+   Windows Security
+   ```
+2. Open it
+
+---
+
+## ✅ Step 2: Check Virus & Threat Protection
+
+* Go to:
+
+  * Virus & Threat Protection
+* Click:
+
+  * **Quick Scan**
+
+👉 Detect malware / threats
+
+---
+
+## ✅ Step 3: Check Firewall Status
+
+* Go to:
+
+  * Firewall & Network Protection
+* Ensure:
+
+  * Firewall is **ON** for all networks
+
+---
+
+## ✅ Step 4: Check Windows Updates
+
+1. Open:
+
+   ```
+   Settings → Windows Update
+   ```
+2. Click:
+
+   * Check for updates
+
+👉 Missing updates = vulnerability ⚠️
+
+---
+
+## ✅ Step 5: Analyze Running Processes
+
+1. Open:
+
+   ```
+   Task Manager (Ctrl + Shift + Esc)
+   ```
+2. Check:
+
+   * Unknown apps
+   * High CPU usage
+
+👉 Suspicious process = risk
+
+---
+
+## ✅ Step 6: Check Startup Programs
+
+* Task Manager → Startup tab
+
+👉 Disable:
+
+* Unknown / unnecessary apps
+
+---
+
+## ✅ Step 7: Check Open Ports
+
+Open Command Prompt:
+
+```bash
+netstat -an
+```
+
+👉 Shows:
+
+* Open ports
+* Active connections
+
+⚠️ Suspicious ports → risk
+
+---
+
+## ✅ Step 8: Check Installed Programs
+
+1. Go to:
+
+   ```
+   Control Panel → Programs
+   ```
+2. Look for:
+
+   * Unknown software
+
+---
+
+## ✅ Step 9: Browser Security Check
+
+* Open Chrome/Edge
+* Check:
+
+  * Saved passwords
+  * Extensions
+
+👉 Remove suspicious extensions
+
+---
+
+# 🔍 Risk Assessment (VERY IMPORTANT)
+
+## Identify Risks:
+
+| Issue           | Risk                |
+| --------------- | ------------------- |
+| Firewall OFF    | Unauthorized access |
+| Outdated system | Exploits possible   |
+| Unknown apps    | Malware             |
+| Open ports      | Attack entry point  |
+| Weak passwords  | Account compromise  |
+
+---
+
+# 🛡️ Mitigation Strategies (WRITE THIS)
+
+* Enable firewall
+* Update system regularly
+* Use strong passwords
+* Remove unknown software
+* Install antivirus
+* Disable unused ports
+
+---
+
+# 📊 Result (write this)
+
+A security audit was successfully conducted, vulnerabilities were identified, and appropriate mitigation strategies were suggested.
+
+---
+
+# ⚠️ Precautions
+
+* Do not delete system files
+* Be careful while disabling processes
+* Only remove trusted suspicious apps
+* Keep system updated
+
+---
+
+# 💡 Viva Questions
+
+### ❓ What is security audit?
+
+→ Checking system for vulnerabilities
+
+### ❓ What is risk assessment?
+
+→ Identifying threats and impact
+
+### ❓ What is mitigation?
+
+→ Reducing risk
+
+### ❓ Why firewall is important?
+
+→ Blocks unauthorized access
+
+---
+
+# 🔥 Quick Revision
+
+* Scan system
+* Check firewall
+* Analyze processes
+* Check ports
+* Identify risks
+* Suggest solutions
+
+---
+
+## ✅ DONE — All Experiments Covered
+
+If you want, I can give:
+✅ **1-page revision for all experiments**
+✅ **Important viva questions (most asked)**
+✅ **Expected lab exam questions with answers**
