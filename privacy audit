@@ -1,0 +1,243 @@
+Here’s the next one in the same **simple + exam-ready format** 👇
+
+---
+
+# 🔬 Experiment 5: Privacy Audit of Apps/Websites & Data Breach Case Study
+
+*(based on your lab manual )*
+
+---
+
+## 🎯 Aim (write this)
+
+To analyze privacy, tracking behavior, and security risks of applications/websites and study real-world data breaches.
+
+---
+
+## 🛠️ Requirements
+
+* Kali Linux
+* Wireshark
+* Burp Suite
+* Browser (Firefox/Chrome)
+* WhatsApp Web / Facebook
+* ✅ Internet REQUIRED
+
+---
+
+# 🚀 Step-by-Step Procedure
+
+---
+
+# 🧩 PART 1: Privacy Audit of WhatsApp (Desktop/Web)
+
+## ✅ Step 1: Open WhatsApp Web
+
+Go to:
+
+```
+https://web.whatsapp.com
+```
+
+👉 Scan QR code using mobile
+
+---
+
+## ✅ Step 2: Start Wireshark
+
+```bash
+wireshark
+```
+
+1. Select interface (eth0 / wlan0)
+2. Click **Start Capture**
+
+---
+
+## ✅ Step 3: Generate Traffic
+
+* Send messages
+* Send images
+* Open chats
+
+---
+
+## ✅ Step 4: Apply Filters
+
+In Wireshark filter bar:
+
+```
+tls
+```
+
+or
+
+```
+dns
+```
+
+---
+
+## 🔍 Observations (VERY IMPORTANT)
+
+* Traffic is **encrypted (TLS)**
+* Domains seen:
+
+  * whatsapp.net
+  * facebook.com
+* Message content **NOT visible**
+
+👉 Shows end-to-end encryption
+
+---
+
+# 🧩 PART 2: Privacy Audit of Facebook
+
+## ✅ Step 1: Open Facebook
+
+```
+https://www.facebook.com
+```
+
+👉 Login with test account
+
+---
+
+## ✅ Step 2: Start Burp Suite
+
+* Open Burp
+* Go to Proxy → Intercept ON
+
+---
+
+## ✅ Step 3: Configure Browser Proxy
+
+Set:
+
+* IP → `127.0.0.1`
+* Port → `8080`
+
+---
+
+## ✅ Step 4: Intercept Traffic
+
+* Reload Facebook
+
+👉 Observe in Burp:
+
+* Cookies (`datr`, `fr`)
+* Session IDs
+* Headers
+
+---
+
+## ✅ Step 5: Analyze Tracking
+
+Press **F12 → Network tab**
+
+Look for:
+
+* Ads
+* Analytics scripts
+* Third-party requests
+
+---
+
+## 🔍 Observations (WRITE THIS)
+
+* Heavy tracking
+* Cookies used for personalization
+* Third-party integrations
+
+---
+
+# 🧩 PART 3: Data Breach Case Study
+
+## ✅ Case Study 1: Facebook Breach
+
+* 533 million users affected
+* Data leaked:
+
+  * Phone numbers
+  * Emails
+* Cause:
+  → API vulnerability
+
+---
+
+## ✅ Case Study 2: WhatsApp Pegasus Attack
+
+* Spyware via missed call
+* Remote device access
+
+---
+
+## ✅ Step: Check Your Email Breach
+
+Go to:
+
+```
+https://haveibeenpwned.com
+```
+
+👉 Enter email → check if leaked
+
+---
+
+# 🔍 Analysis Points (IMPORTANT FOR EXAM)
+
+* Type of attack
+* Vulnerability
+* Data exposed
+* Prevention
+
+---
+
+# 📊 Result (write this)
+
+Privacy audit was successfully performed. WhatsApp showed secure encrypted communication, while Facebook demonstrated extensive tracking. Data breach case studies highlighted risks of vulnerabilities.
+
+---
+
+# ⚠️ Precautions
+
+* Use test accounts only
+* Do not share personal data
+* Ensure proxy is configured correctly
+* Stop Wireshark after capture
+
+---
+
+# 💡 Viva Questions
+
+### ❓ What is TLS?
+
+→ Encryption protocol
+
+### ❓ Why messages not visible in Wireshark?
+
+→ End-to-end encryption
+
+### ❓ What are cookies?
+
+→ Store user session data
+
+### ❓ What is data breach?
+
+→ Unauthorized data exposure
+
+---
+
+# 🔥 Quick Revision
+
+* Wireshark → capture traffic
+* WhatsApp → encrypted
+* Facebook → tracking
+* Study breaches
+
+---
+
+Next:
+👉 **Security Audit & Risk Assessment (last experiment)**
+
+Just say **next** 👍
