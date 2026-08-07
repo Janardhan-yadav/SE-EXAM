@@ -1,237 +1,363 @@
-Good 👍 Janardhan. I’ll give you **very simple exam-ready steps** so you can directly perform and get output.
-
-Source: 
-
----
-
-# ✅ EXPERIMENT: Basic Firewall Configuration
-
----
-
-# 🔹 PART 1: Manual Firewall Configuration (Block One IP)
-
-### 🎯 Goal:
-
-Block a specific IP address using Windows Firewall.
-
----
-
-## ✅ Step-by-Step Procedure (GUI Method)
-
-1. Press **Windows + R**
-
-2. Type:
-
-   ```
-   wf.msc
-   ```
-
-   Press Enter.
-
-3. Click **Inbound Rules** (left side)
-
-4. Click **New Rule** (right side)
-
-5. Select:
-
-   ```
-   Custom → Next
-   ```
-
-6. Select:
-
-   ```
-   All Programs → Next
-   ```
-
-7. Protocol and Ports:
-
-   ```
-   Keep default → Next
-   ```
-
-8. Scope:
-
-   * Under **Remote IP address**
-   * Select: **These IP addresses**
-   * Click **Add**
-   * Enter example IP:
-
-     ```
-     1.2.3.4
-     ```
-   * Click OK → Next
-
-9. Action:
-
-   ```
-   Block the connection → Next
-   ```
-
-10. Profile:
-
-```
-Select Domain, Private, Public → Next
-```
-
-11. Name:
-
-```
-Manual_Block_IP
-```
-
-12. Click **Finish**
-
----
-
-## ✅ Final Output:
-
-That IP is now blocked for incoming traffic.
-
-### 🔎 Verification:
-
-* Go to **Inbound Rules**
-* Find rule: `Manual_Block_IP`
-
----
-
-# 🔹 PART 2: Automated Firewall Using Python Script
-
-### 🎯 Goal:
-
-Automatically block multiple malicious IPs.
-
----
-
-## ✅ Step 1: Create Python File
-
-1. Open **VS Code**
-2. Create file:
-
-   ```
-   firewall.py
-   ```
-3. Paste this code:
-
-```python
-import requests, csv, subprocess
-
-response = requests.get(
-    "https://feodotracker.abuse.ch/downloads/ipblocklist.csv"
-).text
-
-rule = 'netsh advfirewall firewall delete rule name="BadIP"'
-subprocess.run(["PowerShell", "-Command", rule])
-
-mycsv = csv.reader(
-    filter(lambda x: not x.startswith("#"), response.splitlines())
-)
-
-for row in mycsv:
-    ip = row[1]
-    if ip != "dst_ip":
-        print("Added Rule to block:", ip)
-        rule = "netsh advfirewall firewall add rule name='BadIP' Dir=Out Action=Block RemoteIP=" + ip
-        subprocess.run(["PowerShell", "-Command", rule])
-```
-
-Save the file.
-
----
-
-## ✅ Step 2: Run Program
-
-### ⚠️ VERY IMPORTANT:
-
-Open **Command Prompt as Administrator**
-
----
-
-### 🔹 Commands to Type:
-
-1️⃣ Check Python:
-
-```
-python --version
-```
-
-2️⃣ Install library:
-
-```
-python -m pip install requests
-```
-
-3️⃣ Go to file location:
-
-```
-cd Desktop
-```
-
-(or wherever you saved firewall.py)
-
-4️⃣ Run:
-
-```
-python firewall.py
-```
-
----
-
-## ✅ Expected Output:
-
-You will see:
-
-```
-Added Rule to block: 45.9.148.221
-Added Rule to block: 103.17.48.5
-Added Rule to block: 185.234.219.12
-```
-
-And PowerShell will show:
-
-```
-Ok.
-```
-
----
-
-## ✅ Final Verification
-
-1. Open:
-
-   ```
-   wf.msc
-   ```
-2. Go to **Outbound Rules**
-3. Search:
-
-   ```
-   BadIP
-   ```
-
-You will see multiple blocked IP rules.
-
----
-
-# 🔥 Viva Points (Very Important)
-
-If examiner asks:
-
-### ❓ What is Firewall?
-
-A firewall is a network security system that monitors and controls incoming and outgoing traffic based on security rules.
-
-### ❓ Difference between Inbound and Outbound rule?
-
-* Inbound → Controls traffic coming into system
-* Outbound → Controls traffic going out from system
-
-### ❓ Why Admin rights required?
-
-Because firewall rules modify system security settings.
-
----
-
-If you have more experiments (IDS, VPN, SQL injection, Wireshark, etc.), send next PDF.
-
-I’ll make it exam-ready simple again 👍
+Sdc-1
+import React, { useState } from "react";
+function App() {
+const [count, setCount] = useState(0);
+return (
+<div>
+<h1>JSX and Virtual DOM Demo</h1>
+<p>Count: {count}</p>
+<button onClick={() => setCount(count + 1)}>
+Increment
+</button>
+</div>
+);
+}
+export default App;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Sdc-2
+ 
+ 
+ 
+ProductCard.js
+import React from "react";
+function ProductCard({ name, price, category }) {
+return (
+<div style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
+<h3>{name}</h3>
+<p>Price: ₹{price}</p>
+<p>Category: {category}</p>
+<button onClick={() => alert(`${name} Purchased`)}>
+Buy Now
+</button>
+</div>
+);
+}
+export default ProductCard;
+ 
+ 
+App.js
+import React from "react";
+import ProductCard from "./ProductCard";
+function App() {
+const products = [
+{ id: 1, name: "Laptop", price: 50000, category: "Electronics" },
+{ id: 2, name: "Mobile", price: 20000, category: "Electronics" },
+{ id: 3, name: "Shoes", price: 1500, category: "Fashion" }
+];
+return (
+<div>
+<h1>Product Listing</h1>
+{products.map((product) => (
+<ProductCard
+key={product.id}
+name={product.name}
+price={product.price}
+category={product.category}
+/>
+))}
+</div>
+);
+}
+export default App;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Sdc-3
+import React, { useState, useMemo } from "react";
+export default function App() {
+const [products] = useState([
+{ name: "Pen", qty: 10, price: 20 },
+{ name: "Book", qty: 5, price: 100 }
+]);
+const [search, setSearch] = useState("");
+const [dark, setDark] = useState(false);
+const totalValue = useMemo(() => {
+return products.reduce(
+(sum, item) => sum + item.qty * item.price,
+0
+);
+}, [products]);
+const filtered = products.filter((p) =>
+p.name.toLowerCase().includes(search.toLowerCase())
+);
+return (
+<div
+style={{
+backgroundColor: dark ? "#222" : "#fff",
+color: dark ? "#fff" : "#000",
+minHeight: "100vh",
+padding: "20px"
+}}
+>
+<h2>Inventory Management</h2>
+<button onClick={() => setDark(!dark)}>
+Toggle Theme
+</button>
+<br /><br />
+<input
+type="text"
+placeholder="Search Product"
+value={search}
+onChange={(e) => setSearch(e.target.value)}
+/>
+<ul>
+{filtered.map((p, index) => (
+<li key={index}>
+{p.name} - Qty: {p.qty} - ₹{p.price}
+</li>
+))}
+</ul>
+<h3>Total Value: ₹{totalValue}</h3>
+</div>
+);
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Stm lab-1
+1. Open Chrome/Edge and install the Selenium IDE extension from the browser extensions store.
+2. Click the Extensions icon and open Selenium IDE.
+3. Click 'Create a new project' and enter a project name.
+4. Click 'Add new test' and name the test case (e.g., TC_Record_Google).
+5. Click the red 'Record' button.
+6. Enter the base URL (e.g., https://www.google.com) and click 'Start Recording'.
+7. Perform actions: click the search box, type a keyword, press Enter, click a result, then go back.
+8. Stop recording and review the generated commands (open, click, type, assert).
+9. Run the test using the 'Run current test' (play) button.
+10. For analog-style actions: try recording a drag-and-drop or slider movement on a demo site and
+replay it.
+11. Save the project in Selenium IDE.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Stm-2
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class Exp2 {
+public static void main(String[] args) {
+WebDriver driver = new ChromeDriver();
+driver.get("https://www.google.com");
+String expected = "Google";
+String actual = driver.getTitle();
+if(actual.equals(expected))
+System.out.println("PASS");
+else
+System.out.println("FAIL");
+driver.quit();
+}
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Stm-3
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class Exp3 {
+public static void main(String[] args) {
+WebDriver driver = new ChromeDriver();
+driver.get("https://www.google.com");
+WebElement box = driver.findElement(By.name("q"));
+if(box.isDisplayed() && box.isEnabled())
+System.out.println("PASS");
+else
+System.out.println("FAIL");
+driver.quit();
+}
+}
+ 
+ 
+ 
+ 
+ 
+ 
+Stm-4a
+package com.selenium;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+public class Exp4A {
+public static void main(String[] args) throws Exception {
+WebDriver driver = new ChromeDriver();
+driver.get("https://www.google.com");
+WebElement searchBox = driver.findElement(By.name("q"));
+File folder = new File("Screenshots");
+if (!folder.exists())
+folder.mkdir();
+File current = searchBox.getScreenshotAs(OutputType.FILE);
+File currentFile = new File("Screenshots/current_searchbox.png");
+FileHandler.copy(current, currentFile);
+File baseline = new File("Screenshots/baseline_searchbox.png");
+if (!baseline.exists()) {
+System.out.println("Rename current_searchbox.png as baseline_searchbox.png");
+} else {
+if (compareImages(baseline, currentFile))
+System.out.println("BITMAP CHECKPOINT : TEST PASS");
+else
+System.out.println("BITMAP CHECKPOINT : TEST FAIL");
+}
+driver.quit();
+}
+static boolean compareImages(File img1, File img2) throws Exception {
+BufferedImage image1 = ImageIO.read(img1);
+BufferedImage image2 = ImageIO.read(img2);
+if (image1.getWidth() != image2.getWidth()
+|| image1.getHeight() != image2.getHeight())
+return false;
+for (int x = 0; x < image1.getWidth(); x++) {
+for (int y = 0; y < image1.getHeight(); y++) {
+if (image1.getRGB(x, y) != image2.getRGB(x, y))
+return false;
+}
+}
+return true;
+}
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Stm-4b
+package com.selenium;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+public class Exp4B {
+public static void main(String[] args) throws Exception {
+WebDriver driver = new ChromeDriver();
+driver.manage().window().maximize();
+driver.get("https://www.google.com");
+Thread.sleep(3000);
+File screenshot =
+((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+BufferedImage fullImage = ImageIO.read(screenshot);
+File folder = new File("Screenshots");
+if (!folder.exists())
+folder.mkdir();
+BufferedImage current =
+fullImage.getSubimage(0, 0, 800, 600);
+File currentFile =
+new File("Screenshots/current_google_area.png");
+ImageIO.write(current, "png", currentFile);
+File baseline =
+new File("Screenshots/baseline_google_area.png");
+if (!baseline.exists()) {
+System.out.println("Rename current_google_area.png as baseline_google_area.png");
+} else {
+BufferedImage base = ImageIO.read(baseline);
+double similarity = compareImages(base, current);
+if (similarity >= 95)
+System.out.println("BITMAP CHECKPOINT : TEST PASS");
+else
+System.out.println("BITMAP CHECKPOINT : TEST FAIL");
+}
+driver.quit();
+}
+static double compareImages(BufferedImage img1, BufferedImage img2) {
+if (img1.getWidth() != img2.getWidth()
+|| img1.getHeight() != img2.getHeight())
+return 0;
+long same = 0;
+long total = img1.getWidth() * img1.getHeight();
+for (int x = 0; x < img1.getWidth(); x++) {
+for (int y = 0; y < img1.getHeight(); y++) {
+if (img1.getRGB(x, y) == img2.getRGB(x, y))
+same++;
+}
+}
+return (same * 100.0) / total;
+}
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Stm-5
+package com.selenuim.selenuimlab;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class Exp5 {
+public static void main(String[] args) throws Exception {
+// Connect Database
+Connection con = DriverManager.getConnection(
+"jdbc:h2:./StudentDB", "sa", "");
+Statement stmt = con.createStatement();
+// Create Table
+stmt.execute(
+"CREATE TABLE IF NOT EXISTS STUDENT(" +
+"ID INT PRIMARY KEY," +
+"NAME VARCHAR(50)," +
+"EMAIL VARCHAR(100))");
+// Delete Old Data
+stmt.execute("DELETE FROM STUDENT");
+// Insert Record
+stmt.executeUpdate(
+"INSERT INTO STUDENT VALUES" +
+"(1,'Ajay','ajay@gmail.com')");
+// Select Record
+ResultSet rs = stmt.executeQuery(
+"SELECT * FROM STUDENT WHERE ID=1");
+if (rs.next()) {
+System.out.println("Record Exists");
+System.out.println("ID : " + rs.getInt("ID"));
+System.out.println("Name : " + rs.getString("NAME"));
+System.out.println("Email : " + rs.getString("EMAIL"));
+System.out.println("TEST PASS");
+} else {
+System.out.println("Record Not Found");
+System.out.println("TEST FAIL");
+}
+con.close();
+}
+}
+ 
+ 
+ 
+ 
+ 
