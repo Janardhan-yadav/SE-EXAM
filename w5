@@ -1,259 +1,179 @@
-Good 👍 Janardhan.
-Here is your **very simple, exam-ready procedure** for XSS Lab.
+I'll guide you step by step to run **Experiment 8: Data Driven Batch** from your STM lab manual in **Eclipse IDE**.
 
-Source: 
+You do **not** need to create a website or open Chrome for this program. It uses Java and TestNG to execute the same test with three different sets of data.
+
+## Step 1: Install the required software
+
+You need:
+
+1. **Java JDK 17** — to compile and run Java programs.
+2. **Eclipse IDE for Java Developers** — to write and run the code.
+3. **Maven** — Eclipse can manage Maven projects for you.
+4. **TestNG** — the testing framework used by this program.
+
+If you already have Eclipse and Java installed, proceed to Step 2.
+
+## Step 2: Create a Maven project
+
+Open Eclipse and follow these steps:
+
+1. Click **File → New → Maven Project**.
+2. Select **Create a simple project (skip archetype selection)**.
+3. Click **Next**.
+4. Enter the following details:
+
+| Field | Value |
+|---|---|
+| Group Id | `com.stm` |
+| Artifact Id | `STMLab` |
+| Packaging | `jar` |
+
+5. Click **Finish**.
+
+Your project should appear in the Package Explorer on the left.
+
+## Step 3: Add the TestNG dependency
+
+1. Open the `STMLab` project.
+2. Double-click `pom.xml`.
+3. Find the `<dependencies>` section.
+
+If it doesn't exist, add the following inside `<project>`, before `</project>`:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>7.11.0</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+**Important:** Because the dependency has `<scope>test</scope>`, put your Java class under `src/test/java`, not `src/main/java`.
+
+Save the file using **Ctrl + S**. Eclipse should download TestNG automatically. Make sure your computer has an internet connection.
+
+## Step 4: Create the Java package
+
+In the Package Explorer:
+
+1. Expand `STMLab`.
+2. Right-click `src/test/java`.
+3. Select **New → Package**.
+4. Enter:
+
+```text
+com.test.selenium
+```
+
+5. Click **Finish**.
+
+## Step 5: Create the Java class
+
+1. Right-click the `com.test.selenium` package.
+2. Select **New → Class**.
+3. Enter the class name:
+
+```text
+LoginTest
+```
+
+4. Click **Finish**.
+
+Delete any generated code and paste the complete program below.
+
+```java
+package com.test.selenium;
+
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+public class LoginTest {
+
+    @DataProvider(name = "LoginData")
+    public Object[][] getData() {
+        return new Object[][] {
+            {"admin", "admin123"},
+            {"student", "student123"},
+            {"guest", "guest123"}
+        };
+    }
+
+    @Test(dataProvider = "LoginData")
+    public void login(String user, String pass) {
+        System.out.println("Username : " + user);
+        System.out.println("Password : " + pass);
+        System.out.println("Login Successful");
+        System.out.println("---------------------");
+    }
+}
+```
+
+Save the file using **Ctrl + S**.
+
+## Step 6: Run the program
+
+This is the most important step.
+
+1. Right-click `LoginTest.java`.
+2. Select **Run As**.
+3. Choose **TestNG Test**.
+
+If you don't see `TestNG Test`, check the troubleshooting section below.
+
+## Step 7: Check the output
+
+Look at the **Console** tab at the bottom of Eclipse. You should see output similar to this:
+
+```text
+Username : admin
+Password : admin123
+Login Successful
+---------------------
+Username : student
+Password : student123
+Login Successful
+---------------------
+Username : guest
+Password : guest123
+Login Successful
+---------------------
+```
+
+TestNG should also report three successful test executions.
+
+**Why does it execute three times?**
+
+- First execution: `admin`, `admin123`
+- Second execution: `student`, `student123`
+- Third execution: `guest`, `guest123`
+
+The `@DataProvider` supplies the three sets of data, and `@Test` runs the `login()` method once for each set.
 
 ---
 
-# ✅ Experiment: Finding & Exploiting XSS Vulnerabilities (DVWA)
+## If you don't see "Run As → TestNG Test"
 
-## 🎯 Aim:
+You may need to install TestNG support in Eclipse.
 
-To identify and exploit Cross-Site Scripting (XSS) vulnerabilities using DVWA in Kali Linux.
+1. Open **Help → Eclipse Marketplace**.
+2. Search for `TestNG for Eclipse`.
+3. Install the TestNG plugin.
+4. Restart Eclipse if prompted.
+5. Right-click `LoginTest.java` and check **Run As → TestNG Test** again.
 
----
+If the TestNG imports are still showing errors, right-click the project and select **Maven → Update Project**, then click **OK**.
 
-# 🔹 Requirements
+## Let's do it together
 
-✔ Kali Linux
-✔ DVWA
-✔ Apache & MySQL running
-✔ Firefox
+**Tell me which situation you're in right now:**
 
----
+**A.** I haven't installed Java or Eclipse.  
+**B.** I have Eclipse, but haven't created a project.  
+**C.** I've created the project, but I'm stuck adding TestNG.  
+**D.** I've pasted the code and need to run it.  
+**E.** I'm getting an error.
 
-# 🔥 PART 1: Start DVWA
-
----
-
-## ✅ Step 1: Start Services
-
-Open Terminal:
-
-```bash
-sudo service apache2 start
-sudo service mysql start
-```
-
-Open browser:
-
-```
-http://localhost/dvwa
-```
-
-Login:
-
-```
-Username: admin
-Password: password
-```
-
----
-
-## ✅ Step 2: Set Security Level
-
-Go to:
-
-```
-DVWA Security
-```
-
-Set:
-
-```
-Security Level = Low
-```
-
-Click Submit.
-
----
-
-# 🔥 PART 2: Types of XSS in DVWA
-
-According to page 2:
-
-✔ Reflected XSS
-✔ Stored XSS
-✔ DOM Based XSS
-
----
-
-# 🔹 1️⃣ Reflected XSS
-
----
-
-## ✅ Step 3: Test Reflected XSS
-
-Go to:
-
-```
-DVWA → XSS (Reflected)
-```
-
-In input box enter:
-
-```html
-<script>alert('XSS')</script>
-```
-
-Click **Submit**
-
-### ✅ Output:
-
-Popup alert appears → **Reflected XSS confirmed**
-
----
-
-# 🔹 2️⃣ Stored XSS
-
----
-
-## ✅ Step 4: Test Stored XSS
-
-Go to:
-
-```
-DVWA → XSS (Stored)
-```
-
-Fill:
-
-Name:
-
-```html
-<h1>Hacked</h1>
-```
-
-Message:
-
-```html
-<script>alert('Stored XSS')</script>
-```
-
-Click:
-
-```
-Sign Guestbook
-```
-
-Refresh page.
-
-### ✅ Output:
-
-Popup appears every time → **Stored XSS successful**
-
----
-
-# 🔹 3️⃣ DOM Based XSS
-
----
-
-## ✅ Step 5: Test DOM XSS
-
-Go to:
-
-```
-DVWA → XSS (DOM)
-```
-
-In URL bar add:
-
-```html
-#<script>alert('DOM XSS')</script>
-```
-
-Press Enter.
-
-### ✅ Output:
-
-Popup appears → **DOM XSS confirmed**
-
----
-
-# 🔹 Cookie Capture Demo (Important)
-
----
-
-## ✅ Step 6: Capture Session Cookie
-
-In Stored XSS message box enter:
-
-```html
-<script>alert(document.cookie)</script>
-```
-
-Click Submit.
-
-### ✅ Output:
-
-Browser shows session cookie.
-
-⚠️ Demonstrates session hijacking risk.
-
----
-
-# 🔹 Change Security Level
-
----
-
-## ✅ Step 7:
-
-Go to:
-
-```
-DVWA Security
-```
-
-Set:
-
-```
-Medium / High
-```
-
-Repeat same payloads.
-
-You will notice filtering blocks the script.
-
----
-
-# ✅ Final Result (Write This)
-
-XSS vulnerabilities were successfully identified and exploited in DVWA using Reflected, Stored, and DOM-based techniques.
-
----
-
-# 🔥 Viva Questions (Prepare These)
-
-### ❓ What is XSS?
-
-Cross-Site Scripting allows attackers to inject malicious JavaScript into web pages.
-
-### ❓ Difference between Reflected and Stored XSS?
-
-Reflected → Executes immediately, not stored
-Stored → Saved in database, executes every time page loads
-
-### ❓ What is DOM XSS?
-
-Client-side XSS caused by modifying DOM via URL.
-
-### ❓ How to Prevent XSS?
-
-✔ Input validation
-✔ Output encoding
-✔ Content Security Policy
-✔ HttpOnly cookies
-
----
-
-Now you have:
-
-✔ Firewall
-✔ Phishing
-✔ Packet Sniffing
-✔ SQL Injection
-✔ XSS
-
-If one more experiment left, send it fast.
-We’ll complete everything before you sleep 😎🔥
-w
+Reply with **A, B, C, D, or E**, and I'll guide you from that exact point.
