@@ -1,304 +1,548 @@
-Good 👍 Janardhan.
-This is the **last big lab**. I’ll make it very simple so you can perform it easily in exam.
+| Experiment | Main concepts | Priority |
+|---|---|---|
+| 4. E-commerce Application | React Router, multiple pages, dynamic routing, 404 page | High |
+| 5. Dynamic React Form | Configuration object, `useState`, `map()`, form submission | High |
+| 6. React SPA | Routing, `useEffect`, `useState`, API fetching, loading | Very High |
 
-Source: 
+These topics match Experiments 4–6 in your lab manual. SDC 3 Practical Manual With Cer… SDC 3 Practical Manual With Cer… SDC 3 Practical Manual With Cer…
 
----
+# Experiment 4: E-commerce Application Using React Router
 
-# ✅ LAB: Testing Authentication Weaknesses & Session Management (DVWA)
+### 1. Aim
+To develop a simplified e-commerce application using React Router with multiple pages, navigation, dynamic routing, and a 404 page.
 
----
+### 2. Create the project
 
-# 🎯 AIM
-
-To identify authentication weaknesses and session management vulnerabilities in DVWA.
-
----
-
-# 🔥 PART A: Launch DVWA
-
----
-
-## ✅ Step 1: Start Services
-
-Open terminal:
+Open your terminal and execute:
 
 ```bash
-sudo service apache2 start
-sudo service mysql start
+npm create vite@latest ecommerce-app -- --template react
+cd ecommerce-app
+npm install
+npm install react-router-dom
+npm run dev
 ```
+
+Open the project in VS Code.
+
+### 3. Write the code
+
+Replace the contents of `src/App.jsx` with:
+
+```jsx
+import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
+
+function Home() {
+  return <h2>Home Page</h2>;
+}
+
+function Products() {
+  return (
+    <div>
+      <h2>Products Page</h2>
+      <Link to="/products/101">View Product 101</Link>
+    </div>
+  );
+}
+
+function ProductDetails() {
+  const { id } = useParams();
+  return <h2>Product ID: {id}</h2>;
+}
+
+function Cart() {
+  return <h2>Cart Page</h2>;
+}
+
+function Contact() {
+  return <h2>Contact Page</h2>;
+}
+
+function Login() {
+  return <h2>Login Page</h2>;
+}
+
+function NotFound() {
+  return <h2>404 - Page Not Found</h2>;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link> |{" "}
+        <Link to="/products">Products</Link> |{" "}
+        <Link to="/cart">Cart</Link> |{" "}
+        <Link to="/contact">Contact</Link> |{" "}
+        <Link to="/login">Login</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+### 4. Expected output
+
+Your application displays navigation links.
+
+- Click **Home** → Home Page
+- Click **Products** → Products Page
+- Click **Cart** → Cart Page
+- Click **Contact** → Contact Page
+- Click **Login** → Login Page
+- Open `/products/101` → Product ID: 101
+- Open an invalid URL → 404 - Page Not Found
+
+### 5. Important viva questions
+
+**Q1. What is React Router?**
+
+React Router is a library used to navigate between different pages or components in a React application without reloading the entire page.
+
+**Q2. What is `BrowserRouter`?**
+
+It enables routing functionality in a React application.
+
+**Q3. What is the purpose of `Routes` and `Route`?**
+
+- `Routes` groups the route definitions.
+- `Route` maps a URL path to a component.
+
+**Q4. What is `Link`?**
+
+`Link` allows navigation between pages without refreshing the browser.
+
+**Q5. What is `useParams()`?**
+
+It retrieves parameters from a dynamic URL.
+
+Example: `/products/101` gives `id = 101`.
+
+**Q6. What is a 404 page?**
+
+It displays a message when the requested URL does not match any defined route.
+
+**Important note:** Your manual also mentions protected routes. The program above covers navigation, dynamic routing, and the 404 page, but does not implement authentication-based route protection.
 
 ---
 
-## ✅ Step 2: Open DVWA
+# Experiment 5: Dynamic React Form
 
-Open Firefox:
+### 1. Aim
+To create a React form whose input fields are generated dynamically using a JavaScript configuration object.
 
-```
-http://127.0.0.1/dvwa
+### 2. Create the project
+
+```bash
+npm create vite@latest dynamic-form -- --template react
+cd dynamic-form
+npm install
+npm run dev
 ```
 
-Login:
+### 3. Write the code
 
+Replace `src/App.jsx` with:
+
+```jsx
+import { useState } from "react";
+
+const fields = [
+  { name: "name", label: "Name", type: "text" },
+  { name: "email", label: "Email", type: "email" },
+  { name: "mobile", label: "Mobile Number", type: "tel" },
+  { name: "age", label: "Age", type: "number" },
+  { name: "city", label: "City", type: "text" }
+];
+
+export default function App() {
+  const [formData, setFormData] = useState({});
+  const [submitted, setSubmitted] = useState(null);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitted({ ...formData });
+  }
+
+  return (
+    <div>
+      <h2>Dynamic Registration Form</h2>
+
+      <form onSubmit={handleSubmit}>
+        {fields.map((field) => (
+          <div key={field.name}>
+            <label>{field.label}: </label>
+
+            <input
+              name={field.name}
+              type={field.type}
+              value={formData[field.name] || ""}
+              onChange={handleChange}
+            />
+
+            <br /><br />
+          </div>
+        ))}
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {submitted && (
+        <div>
+          <h3>Submitted Details</h3>
+
+          {fields.map((field) => (
+            <p key={field.name}>
+              {field.label}: {submitted[field.name] || ""}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 ```
-Username: admin
-Password: password
+
+### 4. Expected output
+
+The page displays:
+
+```text
+Dynamic Registration Form
+
+Name:          [____________]
+Email:         [____________]
+Mobile Number: [____________]
+Age:           [____________]
+City:          [____________]
+
+[Submit]
 ```
+
+After entering the details and clicking Submit:
+
+```text
+Submitted Details
+
+Name: John Smith
+Email: john@example.com
+Mobile Number: 9876543210
+Age: 22
+City: Hyderabad
+```
+
+### 5. Understand these three concepts
+
+**A. Configuration object**
+
+```jsx
+const fields = [
+  { name: "name", label: "Name", type: "text" },
+  { name: "email", label: "Email", type: "email" }
+];
+```
+
+It stores the details of the input fields.
+
+To add another field, add another object to the array.
+
+**B. Dynamic field generation**
+
+```jsx
+{fields.map((field) => (
+  <input
+    key={field.name}
+    name={field.name}
+    type={field.type}
+    onChange={handleChange}
+  />
+))}
+```
+
+The `map()` method generates an input for every object in the array.
+
+**C. Updating form state**
+
+```jsx
+setFormData({
+  ...formData,
+  [name]: value
+});
+```
+
+- `...formData` preserves existing values.
+- `[name]: value` updates the field that changed.
+
+### 6. Important viva questions
+
+**Q1. What is a dynamic form?**
+
+A form whose input fields are generated programmatically from a configuration object.
+
+**Q2. Why do we use `map()`?**
+
+To iterate over the configuration array and generate input fields dynamically.
+
+**Q3. What is `useState()`?**
+
+A React Hook that allows functional components to store and update state.
+
+**Q4. What is `onChange`?**
+
+An event handler that runs when the input value changes.
+
+**Q5. Why do we use `e.preventDefault()`?**
+
+To prevent the browser's default form submission, which would otherwise normally reload the page.
+
+**Q6. What does the spread operator (`...`) do?**
+
+It expands the properties of an existing object, allowing us to preserve previous form values while updating one field.
 
 ---
 
-## ✅ Step 3: Set Security Level
+# Experiment 6: React SPA with Routing and API Fetching
 
-Go to:
+### 1. Aim
+To develop a Single Page Application with Home and Users pages, fetch user data from a public API, and display a loading indicator while the data is being fetched.
 
+### 2. Create the project
+
+```bash
+npm create vite@latest react-spa -- --template react
+cd react-spa
+npm install
+npm install react-router-dom
+npm run dev
 ```
-DVWA Security
+
+**Note:** This experiment requires an internet connection to retrieve the user data.
+
+### 3. Write the code
+
+Replace `src/App.jsx` with:
+
+```jsx
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+function Home() {
+  return <h2>Home Page</h2>;
+}
+
+function Users() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <h3>Loading...</h3>;
+  }
+
+  if (users.length === 0) {
+    return <h3>Unable to load users.</h3>;
+  }
+
+  return (
+    <div>
+      <h2>Users List</h2>
+
+      {users.map((user) => (
+        <p key={user.id}>{user.name}</p>
+      ))}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link> |{" "}
+        <Link to="/users">Users</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 ```
 
-Select:
+### 4. Expected output
 
-```
-LOW
+When you open the application:
+
+```text
+Home | Users
+
+Home Page
 ```
 
-Click Submit.
+Click Users:
+
+```text
+Home | Users
+
+Users List
+
+Leanne Graham
+Ervin Howell
+Clementine Bauch
+Patricia Lebsack
+Chelsey Dietrich
+...
+```
+
+While the request is in progress, the application displays:
+
+```text
+Loading...
+```
+
+These user names and the API URL match the example in your lab manual. SDC 3 Practical Manual With Cer…
+
+### 5. Understand these important lines
+
+**A. `useState()`**
+
+```jsx
+const [users, setUsers] = useState([]);
+const [loading, setLoading] = useState(true);
+```
+
+- `users` stores the fetched user data.
+- `loading` tracks whether the request is in progress.
+
+**B. `useEffect()`**
+
+```jsx
+useEffect(() => {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response) => response.json())
+    .then((data) => {
+      setUsers(data);
+      setLoading(false);
+    });
+}, []);
+```
+
+It runs the API-fetching operation after the component mounts. The empty dependency array means the effect is intended to run once per mount.
+
+**C. `fetch()`**
+
+It sends an HTTP request to retrieve data from the API.
+
+**D. `response.json()`**
+
+It converts the response body into JavaScript data.
+
+**E. `users.map()`**
+
+It generates a paragraph for every user returned by the API.
+
+### 6. Important viva questions
+
+**Q1. What is an SPA?**
+
+A Single Page Application updates its displayed content dynamically without reloading the entire page during normal navigation.
+
+**Q2. What is an API?**
+
+An Application Programming Interface allows different software applications to communicate with one another.
+
+**Q3. What is `useEffect()`?**
+
+A React Hook used to perform side effects, such as fetching data from an API.
+
+**Q4. Why is the dependency array empty?**
+
+To make the effect run once per component mount, rather than after every render.
+
+**Q5. What is JSON?**
+
+JavaScript Object Notation is a text-based data format commonly used to exchange data between clients and servers.
+
+**Q6. Why do we show Loading?**
+
+Because the API request takes time, and the loading indicator informs the user that data is being retrieved.
+
+**Q7. What happens if the API fails?**
+
+The program above displays `Unable to load users.` if the request fails or returns an empty list.
 
 ---
 
-# 🔥 PART B: Authentication Weakness Testing
+# 🚀 Final Revision: What You Must Memorize
 
----
+You have three experiments, but you don't need to memorize every line independently. Focus on the following patterns.
 
-# 🟢 Experiment 1: Weak Password
+| Concept | Experiment 4 | Experiment 5 | Experiment 6 |
+|---|---|---|---|
+| `BrowserRouter` | Yes | No | Yes |
+| `Routes` and `Route` | Yes | No | Yes |
+| `Link` | Yes | No | Yes |
+| `useParams()` | Yes | No | No |
+| `useState()` | No | Yes | Yes |
+| `useEffect()` | No | No | Yes |
+| `map()` | No | Yes | Yes |
+| Form handling | No | Yes | No |
+| API fetching | No | No | Yes |
+| Loading indicator | No | No | Yes |
 
-Go to:
+## Your preparation schedule tonight
 
-```
-DVWA → Vulnerabilities → Brute Force
-```
+Since the exam is tomorrow, follow this order:
 
-Enter:
+1. **Experiment 5 — 25 minutes:** Practice generating fields and submitting the form.
+2. **Experiment 4 — 30 minutes:** Practice routes, links, dynamic routing, and the 404 page.
+3. **Experiment 6 — 35 minutes:** Practice `useEffect`, `fetch`, loading, and displaying users.
+4. **Viva — 20 minutes:** Revise the questions and answers above.
+5. **Final practice — 20 minutes:** Create a fresh project and try writing the programs without looking at the solutions.
 
-```
-Username: admin
-Password: password
-```
+### One important tip
 
-✅ Login successful → Weak authentication exists
+Don't just memorize the code. Understand the basic sequence:
 
----
+- **Experiment 4:** Define components → configure routes → navigate.
+- **Experiment 5:** Define fields → generate inputs → store values → submit → display data.
+- **Experiment 6:** Configure routes → fetch data → store data → display loading → display users.
 
-# 🟢 Experiment 2: Manual Brute Force
-
-Keep username same:
-
-```
-admin
-```
-
-Try passwords one by one:
-
-1️⃣ admin ❌
-2️⃣ 123456 ❌
-3️⃣ password ✅
-
-### 🔍 Observation:
-
-✔ No account lock
-✔ Unlimited attempts
-✔ No captcha
-✔ No blocking
-
-👉 This is **Brute Force Vulnerability**
-
----
-
-# 🔥 PART C: Session Management Vulnerabilities
-
----
-
-# 🟢 Experiment 3: Session ID Analysis
-
-After login:
-
-Right click → Inspect → Storage → Cookies
-
-Look for:
-
-```
-PHPSESSID
-```
-
-Example:
-
-```
-5f6194766020dcaa2c906358cbd2941b
-```
-
-### 🔍 Observation:
-
-✔ Session ID visible
-✔ Not encrypted
-✔ Can be copied
-
----
-
-# 🟢 Experiment 4: Session Hijacking
-
----
-
-## Step 1: Victim Browser
-
-Login normally as admin.
-
-Copy:
-
-```
-PHPSESSID
-```
-
----
-
-## Step 2: Attacker Browser
-
-Open Private Window:
-
-```
-Ctrl + Shift + P
-```
-
-Go to:
-
-```
-http://127.0.0.1/dvwa
-```
-
-Inspect → Storage → Cookies
-
-Replace PHPSESSID value with copied session ID.
-
-Press Enter.
-
-Refresh page.
-
----
-
-### ✅ Result:
-
-✔ Logged in without username/password
-✔ Session hijacking successful
-
----
-
-# 🟢 Experiment 5: Session Fixation
-
----
-
-## Step 1: Open DVWA (Do NOT login)
-
-Check PHPSESSID before login.
-
-## Step 2: Login without closing browser.
-
-## Step 3: Check PHPSESSID again.
-
-### 🔍 If:
-
-Before Login = After Login
-→ Session Fixation vulnerability exists (LOW level)
-
-If different → Secure.
-
----
-
-# 🟢 Experiment 6: Improper Logout (Session Reuse)
-
----
-
-## Step 1:
-
-Login normally.
-
-Copy PHPSESSID.
-
-## Step 2:
-
-Logout.
-
-## Step 3:
-
-Open Private Window.
-
-Paste old PHPSESSID.
-
-Go directly to:
-
-```
-http://127.0.0.1/dvwa/index.php
-```
-
-Do NOT login.
-
----
-
-### ✅ Expected Result (LOW):
-
-✔ Logged in again
-✔ Without password
-✔ Logout did NOT destroy session
-
----
-
-# 📌 Final Observations Table (Write in Record)
-
-| Test                | Result     |
-| ------------------- | ---------- |
-| Weak Password       | Successful |
-| Brute Force         | Allowed    |
-| Session ID Exposure | Found      |
-| Session Hijacking   | Possible   |
-| Session Fixation    | Observed   |
-| Improper Logout     | Observed   |
-
----
-
-# ✅ Final Conclusion (Write This)
-
-Authentication and session management vulnerabilities were successfully identified in DVWA. The experiment demonstrates the importance of secure password policies, session regeneration, and proper logout mechanisms to prevent unauthorized access.
-
----
-
-# 🎤 Viva Questions (Important)
-
-1. What is authentication?
-   → Process of verifying user identity.
-
-2. What is brute force attack?
-   → Trying multiple passwords until correct one is found.
-
-3. What is session hijacking?
-   → Stealing session ID to access account.
-
-4. What is session fixation?
-   → Using same session ID before and after login.
-
-5. How to prevent session attacks?
-   ✔ Regenerate session after login
-   ✔ Use HTTPS
-   ✔ HttpOnly & Secure cookies
-   ✔ Destroy session on logout
-
----
-
-Now you are fully prepared:
-
-✔ Firewall
-✔ Phishing
-✔ Packet Sniffing
-✔ SQL Injection
-✔ XSS
-✔ Authentication & Session
-
-You’re ready for tomorrow’s cyber security lab 🔥💪
-
-If you want quick last-minute revision summary (5-minute recap), tell me.
+**Let's start with Experiment 5 first.** It is a good way to practise React state and event handling, which will also help you understand Experiment 6.
